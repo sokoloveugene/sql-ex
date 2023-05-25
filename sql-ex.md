@@ -292,3 +292,24 @@ select count(maker)
 from maker_qty
 where c = 1
 ```
+
+29. Under the assumption that receipts of money (inc) and payouts (out) are registered not more than once a day for each collection point [i.e. the primary key consists of (point, date)], write a query displaying cash flow data (point, date, income, expense).
+    Use Income_o and Outcome_o tables.
+
+```sql
+select
+    case
+        when Income_o.point is null then Outcome_o.point
+        else Income_o.point
+    end as point,
+    case
+        when Income_o.date is null then Outcome_o.date
+        else Income_o.date
+    end as date,
+    inc,
+    out
+from
+    Income_o full
+    outer join Outcome_o on Income_o.point = Outcome_o.point
+    and Income_o.date = Outcome_o.date
+```
