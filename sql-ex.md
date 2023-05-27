@@ -313,3 +313,45 @@ from
     outer join Outcome_o on Income_o.point = Outcome_o.point
     and Income_o.date = Outcome_o.date
 ```
+
+30. Under the assumption that receipts of money (inc) and payouts (out) can be registered any number of times a day for each collection point [i.e. the code column is the primary key], display a table with one corresponding row for each operating date of each collection point.
+
+```sql
+with grouped_outcome as (
+    select
+        point,
+        date,
+        sum(out) out
+    from
+        outcome
+    group by
+        point,
+        date
+),
+grouped_income as (
+    select
+        point,
+        date,
+        sum(inc) inc
+    from
+        income
+    group by
+        point,
+        date
+)
+select
+    case
+        when a.point is null then b.point
+        else a.point
+    end as point,
+    case
+        when a.date is null then b.date
+        else a.date
+    end as date,
+    out,
+    inc
+from
+    grouped_outcome as a full
+    outer join grouped_income as b on a.point = b.point
+    and a.date = b.date
+```
