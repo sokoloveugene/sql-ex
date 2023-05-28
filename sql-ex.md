@@ -355,3 +355,12 @@ from
     outer join grouped_income as b on a.point = b.point
     and a.date = b.date
 ```
+
+31. For ship classes with a gun caliber of 16 in. or more, display the class and the country.
+
+```sql
+select class, country from classes
+where bore >= 16
+```
+
+
