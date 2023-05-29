@@ -363,4 +363,28 @@ select class, country from classes
 where bore >= 16
 ```
 
+32. TODO
 
+33. select ship from outcomes
+    where result = 'sunk' and battle = 'North Atlantic'
+
+```sql
+select ship from outcomes
+where result = 'sunk' and battle = 'North Atlantic'
+```
+
+34. In accordance with the Washington Naval Treaty concluded in the beginning of 1922, it was prohibited to build battle ships with a displacement of more than 35 thousand tons.
+
+```sql
+select distinct name from ships
+inner join classes
+on ships.class = classes.class
+where launched >= 1922 and displacement > 35000 and type = 'bb'
+```
+
+35. Find models in the Product table consisting either of digits only or Latin letters (A-Z, case insensitive) only.
+
+```sql
+select  model, type from product
+where model not like '%[^0-9]%' or model not like '%[^a-zA-Z]%'
+```
